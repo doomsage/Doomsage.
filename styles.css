@@ -166,3 +166,20 @@ footer{text-align:center;padding:30px;opacity:.6;}
   color: #7f5af0;
 
 }
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding-top: 80px;
+  flex-wrap: wrap;
+}
+
+.profile-pic {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255,255,255,0.4);
+  box-shadow: 0px 0px 25px rgba(0, 200, 255, 0.5);
+}
