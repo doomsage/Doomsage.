@@ -69,3 +69,24 @@ document.querySelectorAll(".expandable").forEach(card=>{
   });
 
 });
+// Add the loading class to the body immediately
+document.body.classList.add('is-loading');
+
+window.addEventListener('load', function() {
+  const bootloader = document.getElementById('bootloader');
+  
+  // A 2-second delay so the animation gets a moment to shine
+  setTimeout(() => {
+    // Trigger the CSS fade out
+    bootloader.classList.add('fade-out');
+    
+    // Restore scrolling to the main site
+    document.body.classList.remove('is-loading');
+    
+    // Optional: remove it entirely from the DOM after the fade transition ends
+    setTimeout(() => {
+        bootloader.remove();
+    }, 800); 
+    
+  }, 2000); // 2000 milliseconds = 2 seconds. Adjust as you see fit!
+});
