@@ -183,3 +183,52 @@ footer{text-align:center;padding:30px;opacity:.6;}
   border: 3px solid rgba(255,255,255,0.4);
   box-shadow: 0px 0px 25px rgba(0, 200, 255, 0.5);
 }
+/* Prevent scrolling while loading */
+body.is-loading {
+  overflow: hidden; 
+  background-color: #000; /* Matches the GIF's background */
+}
+
+/* The full-screen overlay */
+#bootloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Keeps it on top of everything */
+  transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+}
+
+.hologram-gif {
+  max-width: 350px; /* Adjust size as needed */
+  height: auto;
+}
+
+/* Optional text to match the aesthetic */
+.loading-text {
+  margin-top: 20px;
+  color: #61c2ff; /* Matches the blue of the wireframe */
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 3px;
+  font-size: 14px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+
+/* The class we add with JS to fade the loader out */
+.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
