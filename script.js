@@ -88,5 +88,5 @@ window.addEventListener('load', function() {
         bootloader.remove();
     }, 800); 
     
-  }, 2000); // 2000 milliseconds = 2 seconds. Adjust as you see fit!
+  }, 1700); // 2000 milliseconds = 2 seconds. Adjust as you see fit!
 });
