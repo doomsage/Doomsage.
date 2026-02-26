@@ -232,3 +232,46 @@ body.is-loading {
   visibility: hidden;
 }
 
+
+#creations {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  font-weight: 700;
+}
+
+.creation-grid {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.creation-card {
+  background: #0f0f17;
+  border: 1px solid #2a2a3a;
+  padding: 25px;
+  width: 260px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.creation-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 20px rgba(100, 100, 255, 0.5);
+}
+
+.creation-card h3 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.creation-card p {
+  opacity: 0.8;
+  font-size: 0.95rem;
+}
