@@ -90,3 +90,6 @@ window.addEventListener('load', function() {
     
   }, 1700); // 2000 milliseconds = 2 seconds. Adjust as you see fit!
 });
+function openProject(url) {
+  window.open(url, "_blank");
+}
