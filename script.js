@@ -239,3 +239,39 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 3000);
   });
 });
+document.addEventListener("DOMContentLoaded", () => {
+  const supportBtn = document.getElementById("crypto-support-btn");
+  const upiModal = document.getElementById("upi-modal");
+  const closeBtn = document.querySelector(".close-btn");
+
+  // Apna asli UPI ID aur Naam yahan daalna
+  const upiID = "9202800425@fam"; // Example: doomsage@ybl
+  const payeeName = "Doomsage"; 
+  const upiLink = `upi://pay?pa=${upiID}&pn=${payeeName}&cu=INR`;
+
+  if (!supportBtn) return;
+
+  supportBtn.addEventListener("click", () => {
+    // Check if user is on a mobile device
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      // Mobile user: Direct open GPay/PhonePe/Paytm
+      window.location.href = upiLink;
+    } else {
+      // Desktop user: Show QR Code Modal
+      upiModal.classList.add("show");
+    }
+  });
+
+  // Modal close logic
+  closeBtn.addEventListener("click", () => {
+    upiModal.classList.remove("show");
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target === upiModal) {
+      upiModal.classList.remove("show");
+    }
+  });
+});
