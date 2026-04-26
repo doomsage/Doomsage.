@@ -199,26 +199,3 @@ document.addEventListener("DOMContentLoaded", () => {
     renderer.setSize(width, height);
   });
 });
-document.addEventListener("DOMContentLoaded", () => {
-  const rock = document.getElementById("vintage-rock");
-  const container = document.getElementById("mystic-rock-container");
-  const hint = document.getElementById("tap-hint");
-
-  // Agar rock element nahi hai toh script kuch nahi karegi
-  if (!rock) return;
-
-  rock.addEventListener("click", () => {
-    // 1. Text hide karo
-    if(hint) hint.style.opacity = "0";
-
-    // 2. Container aur rock me "cracked" class add karo
-    container.classList.add("cracked");
-    rock.classList.add("cracked");
-
-    // 3. Exact 2.2 seconds baad redirect kar do
-    // (Jab white light screen ko almost cover kar chuki hogi)
-    setTimeout(() => {
-      window.location.href = "https://my-store-10ff99d.creator-spring.com/";
-    }, 2200); 
-  });
-});
