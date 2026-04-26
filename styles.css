@@ -469,7 +469,7 @@ body.is-loading {
 
 /* Katana ka swing animation (Extremely fast) */
 #slash-scene.swing #katana-blade {
-  animation: katanaSlash 0.25s cubic-bezier(0.1, 1, 0.1, 1) forwards;
+  animation: katanaSlash 0.5s cubic-bezier(0.1, 1, 0.1, 1) forwards;
   opacity: 1;
 }
 
