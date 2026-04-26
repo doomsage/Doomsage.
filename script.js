@@ -199,3 +199,43 @@ document.addEventListener("DOMContentLoaded", () => {
     renderer.setSize(width, height);
   });
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const scroll = document.getElementById("mystic-scroll");
+  const scene = document.getElementById("slash-scene");
+
+  if (!scroll) return;
+
+  scroll.addEventListener("click", () => {
+    // 1. Scroll ko gayab karo (Time Freeze feel)
+    scroll.style.transform = "scale(0)";
+    scroll.style.opacity = "0";
+    
+    // 2. Dark Overlay aur scene ko active karo
+    scene.classList.add("active");
+
+    // 3. The Katana Swing (Delay: 200ms)
+    setTimeout(() => {
+      scene.classList.add("swing");
+    }, 200);
+
+    // 4. The Jagged Cut & White Light Flash (Delay: 450ms)
+    // Jaise hi blade cross karega, piche se white light chamkegi
+    setTimeout(() => {
+      scene.classList.add("flash");
+    }, 450);
+
+    // 5. The Dimension Split (Delay: 550ms)
+    // Dono screen ke half slide hoke alag hone lagenge
+    setTimeout(() => {
+      scene.classList.add("split");
+    }, 550);
+
+    // 6. Redirect to Store (Delay: 1800ms)
+    // Jab pure screen par sirf white light bachegi
+    setTimeout(() => {
+      window.location.href = "https://my-store-10ff99d.creator-spring.com/";
+    }, 1800);
+  });
+});
