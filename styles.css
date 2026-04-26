@@ -345,3 +345,136 @@ body.is-loading {
   overflow: hidden;
 }
 
+#anime-slash-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* === THE SCROLL === */
+#mystic-scroll {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+  z-index: 50;
+  animation: floatScroll 3s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+#mystic-scroll:hover {
+  transform: scale(1.1);
+}
+
+.glow-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 215, 0, 0.4);
+  filter: blur(20px);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+  z-index: -1;
+}
+
+@keyframes floatScroll {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.5); }
+}
+
+/* === SLASH SCENE === */
+#slash-scene {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+}
+
+#slash-scene.active {
+  opacity: 1;
+}
+
+/* Piche ki White Blinding Light */
+#blinding-core {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #ffffff;
+  box-shadow: inset 0 0 100px #00ffcc, inset 0 0 200px #fff;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+#slash-scene.flash #blinding-core {
+  opacity: 1;
+}
+
+/* Screen ke Do Hise (Top & Bottom) */
+.screen-half {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #050505; /* Black screen jab time freeze hoga */
+  transition: transform 1.5s cubic-bezier(0.1, 1, 0.3, 1);
+}
+
+/* 30-Degree Jagged Cut using Polygon */
+.top-half {
+  clip-path: polygon(0 0, 100% 0, 100% 25%, 88% 35%, 75% 52%, 62% 48%, 50% 55%, 38% 68%, 25% 65%, 12% 72%, 0 75%);
+}
+.bottom-half {
+  clip-path: polygon(0 100%, 100% 100%, 100% 25%, 88% 35%, 75% 52%, 62% 48%, 50% 55%, 38% 68%, 25% 65%, 12% 72%, 0 75%);
+}
+
+/* Jab screen fategi, dono tukde alag direction me fिसlenge */
+#slash-scene.split .top-half {
+  transform: translate(-10vw, -15vh);
+  opacity: 0; /* Fade out as they move */
+  transition: all 1.2s ease-in;
+}
+#slash-scene.split .bottom-half {
+  transform: translate(10vw, 15vh);
+  opacity: 0;
+  transition: all 1.2s ease-in;
+}
+
+/* === THE KATANA BLADE === */
+#katana-blade {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 200vw; 
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #fff, #00ffcc, #fff, transparent);
+  box-shadow: 0 0 20px #00ffcc, 0 0 40px #fff;
+  /* Angle matching the 30-degree cut */
+  transform: translate(-50%, -50%) rotate(-26deg) translateX(150vw);
+  opacity: 0;
+}
+
+/* Katana ka swing animation (Extremely fast) */
+#slash-scene.swing #katana-blade {
+  animation: katanaSlash 0.25s cubic-bezier(0.1, 1, 0.1, 1) forwards;
+  opacity: 1;
+}
+
+@keyframes katanaSlash {
+  0% { transform: translate(-50%, -50%) rotate(-26deg) translateX(150vw); }
+  50% { height: 10px; } /* Flash thick in the middle */
+  100% { transform: translate(-50%, -50%) rotate(-26deg) translateX(-150vw); opacity: 0;}
+}
