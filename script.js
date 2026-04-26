@@ -93,3 +93,109 @@ window.addEventListener('load', function() {
 function openProject(url) {
   window.open(url, "_blank");
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const wrapper = document.getElementById('shatter-wrapper');
+  const container = document.getElementById('shatter-canvas-container');
+  const btn = document.getElementById('shatter-main-btn');
+  const soonText = document.getElementById('shatter-soon-text');
+
+  // Agar element nahi mila toh script exit kar jayegi (prevents errors on other pages)
+  if (!wrapper || !container || !btn) return;
+
+  const scene = new THREE.Scene();
+  
+  // Wrapper ke dimensions fetch kar rahe hain
+  let width = wrapper.clientWidth || window.innerWidth;
+  let height = wrapper.clientHeight || 300;
+
+  const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+  camera.position.z = 5;
+
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  container.appendChild(renderer.domElement);
+
+  // Lighting
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+  scene.add(ambientLight);
+
+  const pointLight1 = new THREE.PointLight(0x00ffcc, 2, 50);
+  pointLight1.position.set(2, 2, 2);
+  scene.add(pointLight1);
+
+  const pointLight2 = new THREE.PointLight(0xbd00ff, 2, 50);
+  pointLight2.position.set(-2, -2, 2);
+  scene.add(pointLight2);
+
+  // Crystal Material
+  const crystalMaterial = new THREE.MeshPhysicalMaterial({
+    color: 0xffffff,
+    metalness: 0.1,
+    roughness: 0.1,
+    transmission: 0.9,
+    opacity: 1,
+    transparent: true,
+    envMapIntensity: 1.0
+  });
+
+  let shards = [];
+  let isShattered = false;
+
+  function explodeCrystal() {
+    const numShards = 35;
+    for (let i = 0; i < numShards; i++) {
+      const geometry = new THREE.TetrahedronGeometry(Math.random() * 0.3 + 0.1);
+      const shard = new THREE.Mesh(geometry, crystalMaterial);
+      
+      shard.position.set((Math.random() - 0.5) * 1.5, (Math.random() - 0.5) * 0.5, 0);
+      
+      shard.userData.velocity = new THREE.Vector3(
+        (Math.random() - 0.5) * 0.25,
+        (Math.random() - 0.1) * 0.25,
+        (Math.random() - 0.5) * 0.25
+      );
+      
+      shard.userData.rotSpeed = new THREE.Vector3(
+        Math.random() * 0.15, Math.random() * 0.15, Math.random() * 0.15
+      );
+
+      scene.add(shard);
+      shards.push(shard);
+    }
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+    if (isShattered) {
+      shards.forEach(shard => {
+        shard.position.add(shard.userData.velocity);
+        shard.userData.velocity.y -= 0.006; // Gravity effect
+        shard.rotation.x += shard.userData.rotSpeed.x;
+        shard.rotation.y += shard.userData.rotSpeed.y;
+        shard.rotation.z += shard.userData.rotSpeed.z;
+      });
+    }
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  btn.addEventListener('click', () => {
+    btn.style.display = 'none';
+    isShattered = true;
+    explodeCrystal();
+    
+    // Animate text reveal
+    soonText.style.opacity = '1';
+    soonText.style.transform = 'scale(1)';
+  });
+
+  // Keep it responsive within your wrapper
+  window.addEventListener('resize', () => {
+    width = wrapper.clientWidth;
+    height = wrapper.clientHeight;
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(width, height);
+  });
+});
