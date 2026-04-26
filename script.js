@@ -218,13 +218,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // 3. The Katana Swing (Delay: 200ms)
     setTimeout(() => {
       scene.classList.add("swing");
-    }, 1000);
+    }, 800);
 
     // 4. The Jagged Cut & White Light Flash (Delay: 450ms)
     // Jaise hi blade cross karega, piche se white light chamkegi
     setTimeout(() => {
       scene.classList.add("flash");
-    }, 1000);
+    }, 1200);
 
     // 5. The Dimension Split (Delay: 550ms)
     // Dono screen ke half slide hoke alag hone lagenge
@@ -236,6 +236,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Jab pure screen par sirf white light bachegi
     setTimeout(() => {
       window.location.href = "https://my-store-10ff99d.creator-spring.com/";
-    }, 4000);
+    }, 3000);
   });
 });
