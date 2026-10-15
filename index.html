@@ -35,6 +35,21 @@
 
   <link rel="stylesheet" href="styles.css">
 
+<style>
+/* Blog: scoped styles preserve the portfolio's existing layout. */
+.blog-jump {display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 26px;border:1px solid rgba(175,155,255,.55);border-radius:999px;background:rgba(127,90,240,.14);color:#f5f0ff;text-decoration:none;font-size:.85rem;letter-spacing:.08em;transition:background .2s,transform .2s;}
+.blog-jump:hover {background:rgba(127,90,240,.3);transform:translateY(-2px);}
+.blog-jump:focus-visible,#blog a:focus-visible {outline:3px solid #b8a0ff;outline-offset:5px;}
+#blog {position:relative;border-top:1px solid rgba(184,160,255,.24);border-bottom:1px solid rgba(184,160,255,.24);background:linear-gradient(135deg,rgba(127,90,240,.1),rgba(0,234,255,.025));scroll-margin-top:24px;}
+#blog .blog-inner {max-width:900px;margin:0 auto;}
+#blog .blog-label {font-size:.78rem;letter-spacing:.24em;color:#c6b6ff;margin-bottom:24px;}
+#blog article {background:rgba(18,9,45,.84);border:1px solid rgba(184,160,255,.24);border-radius:24px;padding:clamp(24px,5vw,54px);box-shadow:0 24px 70px rgba(0,0,0,.2);}
+#blog h3 {font-size:clamp(1.3rem,3.4vw,2.2rem);line-height:1.45;letter-spacing:-.02em;color:#faf7ff;margin:0 0 28px;overflow-wrap:anywhere;}
+#blog .blog-body p {font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:clamp(1rem,2vw,1.15rem);line-height:1.85;color:#ded8ed;margin:0 0 22px;}
+#blog .blog-body p:last-child {margin:30px 0 0;color:#c8b6ff;font-size:1rem;}
+@media(max-width:600px){#blog{padding:56px 6%;}#blog article{border-radius:18px;}#blog .blog-label{margin-bottom:20px;}}
+@media(prefers-reduced-motion:reduce){.blog-jump{transition:none;}}
+</style>
 </head>
 
 <body>
@@ -61,6 +76,7 @@
   <p class="subtitle">Kali Linux User • Ethical Hacker • Security Researcher • Builder</p>
 
   <p class="terminal-line">$ kali • burpsuite • wireshark • sherlock • esp8266</p>
+  <a class="blog-jump" href="#blog">BLOG</a>
 
 </section>
 
@@ -159,7 +175,23 @@
 
   
   
-  <section id="creations">
+  
+<section id="blog" aria-labelledby="blog-heading">
+  <div class="blog-inner">
+    <h2 id="blog-heading" class="blog-label">BLOG</h2>
+    <article aria-labelledby="disclosure-heading">
+      <h3 id="disclosure-heading">Reported a Security Vulnerability to Avanti Fellows</h3>
+      <div class="blog-body">
+        <p>A few days ago I reported a critical security issue I found in the Gurukul platform (used by Avanti Fellows and JNV students across India) to both the organization and CERT-In.</p>
+        <p>I&#x27;m not sharing technical details yet — the team is actively working on a fix and I want to give them the space to patch it properly first. What I can say: they responded quickly, confirmed the report was legitimate and useful, and are rolling out fixes within the week.</p>
+        <p>I&#x27;ll publish the full technical writeup once the fix is confirmed — covering what I found, how I found it, and why it mattered. Until then: responsible disclosure means the story comes after the fix, not before.</p>
+        <p>— Doomsage</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="creations">
   <h2 class="section-title">Creations</h2>
 
   <div class="creation-grid">
