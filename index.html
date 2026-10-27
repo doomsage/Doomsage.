@@ -53,6 +53,16 @@
 #blog .blog-body p {overflow-wrap:anywhere;}
 @media(max-width:600px){#blog{padding:56px 6%;}#blog article{border-radius:18px;}#blog .blog-label{margin-bottom:20px;}}
 @media(prefers-reduced-motion:reduce){.blog-jump{transition:none;}}
+/* Blog accordion */
+#blog .blog-body{position:relative;overflow:hidden;transition:max-height .45s ease;}
+#blog .blog-body.is-collapsed{max-height:300px;}
+#blog .blog-body.is-collapsed::after{content:"";position:absolute;left:0;right:0;bottom:0;height:140px;background:linear-gradient(to bottom,rgba(18,9,45,0),rgba(18,9,45,.97));pointer-events:none;}
+#blog .blog-toggle{display:flex;align-items:center;justify-content:center;gap:10px;margin:22px auto 0;min-height:46px;padding:12px 28px;border:1px solid rgba(175,155,255,.55);border-radius:999px;background:rgba(127,90,240,.14);color:#f5f0ff;font:inherit;font-size:.85rem;letter-spacing:.08em;cursor:pointer;transition:background .2s;}
+#blog .blog-toggle:hover{background:rgba(127,90,240,.3);}
+#blog .blog-toggle:focus-visible{outline:3px solid #b8a0ff;outline-offset:5px;}
+#blog .blog-toggle .arrow{display:inline-block;transition:transform .3s;}
+#blog .blog-toggle[aria-expanded="true"] .arrow{transform:rotate(180deg);}
+@media(prefers-reduced-motion:reduce){#blog .blog-body,#blog .blog-toggle .arrow{transition:none;}}
 </style>
 </head>
 
@@ -186,7 +196,7 @@
     <h2 id="blog-heading" class="blog-label">BLOG</h2>
     <article aria-labelledby="disclosure-heading">
       <h3 id="disclosure-heading">Protecting Student Data: My Responsible Disclosure to Avanti Fellows</h3>
-      <div class="blog-body">
+      <div class="blog-body is-collapsed" id="blog-body">
         <p>By Kunal Dewangan (Doomsage)<br>Reported: 15 October 2026 | Updated: 28 October 2026</p>
         <p>I use Avanti Fellows&#x27; learning platform as a Class 12 student. Finding a security problem in a system used by students like me made the stakes personal: the information involved belonged to students and their families.</p>
         <p>On 15 October 2026, I submitted a security report to Avanti Fellows about two related issues in the authentication and student-profile flow supporting Gurukul: access to personal information without an authenticated session, and exposure of session tokens.</p>
@@ -232,6 +242,7 @@
         <p>This disclosure is part of my security portfolio because it demonstrates that process in practice: a documented report, constructive engagement from Avanti&#x27;s technical team and leadership, and team-reported preliminary fixes.</p>
         <p>- Kunal Dewangan / Doomsage</p>
       </div>
+      <button type="button" class="blog-toggle" id="blog-toggle" aria-expanded="false" aria-controls="blog-body"><span class="label">READ FULL CASE STUDY</span><span class="arrow" aria-hidden="true">&#9662;</span></button>
     </article>
   </div>
 </section>
@@ -449,6 +460,12 @@
 
 </footer>
 
+<script>
+(function(){var b=document.getElementById('blog-body'),t=document.getElementById('blog-toggle');if(!b||!t)return;
+t.addEventListener('click',function(){var open=t.getAttribute('aria-expanded')==='true';
+if(open){b.classList.add('is-collapsed');t.setAttribute('aria-expanded','false');t.querySelector('.label').textContent='READ FULL CASE STUDY';document.getElementById('blog').scrollIntoView({block:'start'});}
+else{b.classList.remove('is-collapsed');t.setAttribute('aria-expanded','true');t.querySelector('.label').textContent='SHOW LESS';}});})();
+</script>
 <script src="script.js"></script>
 
 </body>
