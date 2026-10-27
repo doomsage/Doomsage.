@@ -47,6 +47,10 @@
 #blog h3 {font-size:clamp(1.3rem,3.4vw,2.2rem);line-height:1.45;letter-spacing:-.02em;color:#faf7ff;margin:0 0 28px;overflow-wrap:anywhere;}
 #blog .blog-body p {font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:clamp(1rem,2vw,1.15rem);line-height:1.85;color:#ded8ed;margin:0 0 22px;}
 #blog .blog-body p:last-child {margin:30px 0 0;color:#c8b6ff;font-size:1rem;}
+#blog .blog-body h4 {font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:1.15rem;line-height:1.5;color:#c8b6ff;margin:38px 0 18px;letter-spacing:0;}
+#blog .blog-body ol,#blog .blog-body ul {font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:clamp(1rem,2vw,1.15rem);line-height:1.85;color:#ded8ed;padding-left:1.6em;margin:0 0 22px;}
+#blog .blog-body li {padding-left:.25em;margin-bottom:8px;overflow-wrap:anywhere;}
+#blog .blog-body p {overflow-wrap:anywhere;}
 @media(max-width:600px){#blog{padding:56px 6%;}#blog article{border-radius:18px;}#blog .blog-label{margin-bottom:20px;}}
 @media(prefers-reduced-motion:reduce){.blog-jump{transition:none;}}
 </style>
@@ -181,12 +185,52 @@
   <div class="blog-inner">
     <h2 id="blog-heading" class="blog-label">BLOG</h2>
     <article aria-labelledby="disclosure-heading">
-      <h3 id="disclosure-heading">Reported a Security Vulnerability to Avanti Fellows</h3>
+      <h3 id="disclosure-heading">Protecting Student Data: My Responsible Disclosure to Avanti Fellows</h3>
       <div class="blog-body">
-        <p>A few days ago I reported a critical security issue I found in the Gurukul platform (used by Avanti Fellows and JNV students across India) to both the organization and CERT-In.</p>
-        <p>I&#x27;m not sharing technical details yet — the team is actively working on a fix and I want to give them the space to patch it properly first. What I can say: they responded quickly, confirmed the report was legitimate and useful, and are rolling out fixes within the week.</p>
-        <p>I&#x27;ll publish the full technical writeup once the fix is confirmed — covering what I found, how I found it, and why it mattered. Until then: responsible disclosure means the story comes after the fix, not before.</p>
-        <p>— Doomsage</p>
+        <p>By Kunal Dewangan (Doomsage)<br>Reported: 15 October 2026 | Updated: 28 October 2026</p>
+        <p>I use Avanti Fellows&#x27; learning platform as a Class 12 student. Finding a security problem in a system used by students like me made the stakes personal: the information involved belonged to students and their families.</p>
+        <p>On 15 October 2026, I submitted a security report to Avanti Fellows about two related issues in the authentication and student-profile flow supporting Gurukul: access to personal information without an authenticated session, and exposure of session tokens.</p>
+        <p>The result was a constructive exchange with Avanti&#x27;s team, a personal reply from its Co-CEO, and confirmation from the technical team that preliminary fixes had been made. This case study explains what I reported, why it mattered, and how the organization responded, without publishing instructions for reproducing the issues.</p>
+        <h4>What I found</h4>
+        <p>My report described a verification flow that could disclose student information without requiring an existing authenticated session. A related profile flow returned further personal and family information. The report also raised concerns about predictable student identifiers and controls against repeated attempts.</p>
+        <p>During a later check documented in the same report, I observed access and refresh tokens in the verification response. Exposing session tokens raised a potential account-takeover risk, beyond the loss of personal information alone.</p>
+        <p>My report records that I used my own test record to confirm the behavior, did not carry out mass extraction, and did not use exposed tokens to enter another student&#x27;s account.</p>
+        <h4>The information involved</h4>
+        <p>The original report names 24 profile and personal-data fields:</p>
+        <ol class="disclosure-fields"><li>Roll Number</li><li>APAAR ID</li><li>User ID</li><li>Name</li><li>Gender</li><li>Date of Birth</li><li>Category</li><li>Phone</li><li>WhatsApp Number</li><li>District</li><li>State</li><li>Father&#x27;s Name</li><li>Father&#x27;s Phone</li><li>Father&#x27;s Profession</li><li>Father&#x27;s Education</li><li>Mother&#x27;s Name</li><li>Mother&#x27;s Phone</li><li>Mother&#x27;s Profession</li><li>Mother&#x27;s Education</li><li>Stream</li><li>Board Stream</li><li>Grade 10 Math %</li><li>Grade 10 Science %</li><li>Grade 10 English %</li></ol>
+        <p>The report separately identified two session-token fields: access_token and refresh_token.</p>
+        <p>That is 24 named profile fields plus two token fields. These are the labels documented in my report; no student&#x27;s actual information is included here.</p>
+        <h4>Why the combination mattered</h4>
+        <p>A name alone tells a different story from a name connected to a date of birth, academic identifier, district, marks, and both parents&#x27; contact details. Together, those fields could make impersonation more convincing and extend the privacy risk from a student to their family.</p>
+        <p>The concern was particularly serious because the platform serves school students, including minors. I did not measure the total number of affected records, and this case study does not claim that every student on the platform was affected.</p>
+        <h4>What could have gone wrong?</h4>
+        <ul class="disclosure-risks"><li>Targeted phishing and impersonation: someone using real student details could pose as a teacher, programme representative, or support worker when contacting students or parents.</li></ul>
+        <ul class="disclosure-risks"><li>Fraud and identity misuse: academic identifiers combined with names, dates of birth, and family information could support impersonation attempts or make fraudulent requests seem credible.</li></ul>
+        <ul class="disclosure-risks"><li>Harassment and unwanted contact: direct phone and WhatsApp details could allow strangers to contact students and their families.</li></ul>
+        <ul class="disclosure-risks"><li>Exposure of private family and academic information: category, parents&#x27; education and professions, and school marks could be used for profiling, embarrassment, or discriminatory targeting.</li></ul>
+        <ul class="disclosure-risks"><li>Account misuse: exposed session tokens could potentially let an attacker act as a student within services accepting those tokens. I did not test this by accessing anyone else&#x27;s account.</li></ul>
+        <p>These are potential consequences, not evidence that these harms actually occurred. My report did not establish a malicious breach, a victim count, or confirmed harm to a particular student.</p>
+        <h4>Severity</h4>
+        <p>I classified the findings as Critical in my original report and gave an estimated CVSS range of approximately 9.1-9.8. That was my assessment, not an official score issued by Avanti Fellows or CERT-In, and it was not a validated CVSS calculation.</p>
+        <p>The reasons for that assessment were the combination of access without an authenticated session, sensitive student and family information, concerns about repeated access, and the additional exposure of session tokens.</p>
+        <h4>How I reported it</h4>
+        <p>I sent the report to info@avantifellows.org on 15 October 2026 and copied CERT-In at incident@cert-in.org.in, vdisclose@cert-in.org.in, and info@cert-in.org.in.</p>
+        <p>The report separated the personal-data issue from the token-exposure issue, explained their potential impact, and provided sanitized request and response structures rather than actual student records.</p>
+        <p>I recommended stronger authentication and access controls, safer token issuance, controls against repeated attempts, a wider review of related APIs, and precautionary token rotation where needed. I kept the findings private at that stage and offered to help verify the fixes.</p>
+        <h4>How avanti responded</h4>
+        <p>On 15 October, Divya Singh thanked me and brought the technical team into the conversation. Pritam Sukumar said the details had already helped identify &quot;a few remaining holes&quot; during security cleanup work the team had underway.</p>
+        <p>Vandana Goyal, Avanti Fellows&#x27; Managing Trustee and Co-CEO, also replied personally. She welcomed the fact that a student was helping and wrote:</p>
+        <p>&quot;You have a bright future :)&quot;</p>
+        <p>The response showed that the report had reached both the technical team and leadership, and that the organization was engaging with the findings constructively.</p>
+        <h4>The outcome</h4>
+        <p>On 16 October, Suryateja B.V. replied that the team had made preliminary fixes. He said the verification flow had been tightened to stop malicious users accessing tokens, and that the student-profile endpoint identified in my report had been removed. Further fixes were also planned.</p>
+        <p>That is a documented outcome: the team acknowledged the report&#x27;s usefulness and described specific remediation steps. It is not the same as an independently verified claim that every related issue was fully resolved.</p>
+        <p>As of this update, the correspondence reviewed for this disclosure does not establish complete closure or a completed independent retest. Endpoint details, reproduction instructions, and the full technical write-up therefore remain private.</p>
+        <h4>What this work demonstrates</h4>
+        <p>The important part was turning a technical observation into a report another team could act on: separating related issues, documenting the information involved, explaining potential impact, suggesting fixes, and communicating without exposing students&#x27; data publicly.</p>
+        <p>It reinforced a practical lesson: finding a vulnerability is only part of security work. Knowing where to stop, protecting the people behind the data, and being precise about what has and has not been verified matter just as much.</p>
+        <p>This disclosure is part of my security portfolio because it demonstrates that process in practice: a documented report, constructive engagement from Avanti&#x27;s technical team and leadership, and team-reported preliminary fixes.</p>
+        <p>- Kunal Dewangan / Doomsage</p>
       </div>
     </article>
   </div>
