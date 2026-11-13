@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#000000">
-<title>Doomsage Dashboard | Everything Kunal Builds</title>
+<title>Doomsage Dashboard</title>
 <meta name="description" content="Every site, app and project by Kunal Dewangan (Doomsage), in one place.">
 <link rel="canonical" href="https://doomsage.in/dashboard.html">
 <link rel="icon" type="image/png" href="/favicon.png">
@@ -59,6 +59,22 @@ footer .big{font-family:'Cinzel',serif;letter-spacing:.5em;color:var(--gold);fon
 footer p{color:var(--muted);font-size:.74rem;margin-top:10px;letter-spacing:.06em}
 @media(max-width:520px){.wrap{padding:0 16px}.hero{padding-top:34px}.brand span{display:none}.stat b{font-size:1.5rem}.card{padding:22px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+.gate{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+.gate img{width:72px;height:72px;object-fit:contain;margin-bottom:18px}
+.gate h1{font-size:clamp(1.6rem,6vw,2.4rem);margin:6px 0 8px}
+.gate p{color:var(--muted);font-weight:300;font-size:.95rem}
+.dots{display:flex;gap:14px;margin:30px 0 26px}
+.dots i{width:14px;height:14px;border-radius:50%;border:1px solid var(--gold);transition:.15s}
+.dots i.f{background:var(--gold);box-shadow:0 0 12px rgba(212,175,55,.6)}
+.dots.err{animation:sh .35s}
+@keyframes sh{20%,60%{transform:translateX(-9px)}40%,80%{transform:translateX(9px)}}
+.pad{display:grid;grid-template-columns:repeat(3,76px);gap:14px}
+.pad button{height:76px;border-radius:50%;border:1px solid var(--line);background:rgba(212,175,55,.05);color:var(--cream);font:500 1.5rem 'Cinzel',serif;cursor:pointer;transition:.15s;-webkit-tap-highlight-color:transparent}
+.pad button:active{background:var(--gold);color:#000}
+.pad .ghost{border:none;background:none;font-size:.8rem;letter-spacing:.1em;color:var(--muted)}
+.msg{height:20px;margin-top:20px;font-size:.8rem;letter-spacing:.1em;color:#f87171}
+.hide{display:none!important}
 </style>
 </head>
 <body>
@@ -67,82 +83,36 @@ footer p{color:var(--muted);font-size:.74rem;margin-top:10px;letter-spacing:.06e
     <a class="brand" href="/"><img src="https://doomnest.doomsage.in/assets/3-logo.png" alt="Doomsage logo" onerror="this.style.display='none'"><span>DOOMSAGE</span></a>
     <a class="back" href="/">&larr; PORTFOLIO</a>
   </header>
-
   <section class="hero">
     <p class="eyebrow">KUNAL DEWANGAN &middot; DOOMSAGE</p>
     <h1>The Doomsage<br>Dashboard</h1>
-    <p class="sub">Every site, app and project I build, in one place. Tap any card to open it.</p>
-    <div class="stats">
-      <div class="stat"><b id="n-all">0</b><span>PROJECTS</span></div>
-      <div class="stat"><b id="n-live">0</b><span>LIVE NOW</span></div>
-      <div class="stat"><b id="n-wip">0</b><span>IN PROGRESS</span></div>
-    </div>
-    <div class="chips" id="chips">
-      <button class="chip on" data-f="all">ALL</button>
-      <button class="chip" data-f="Sites">SITES</button>
-      <button class="chip" data-f="Apps">APPS</button>
-      <button class="chip" data-f="Tools">TOOLS</button>
-    </div>
+    <p class="sub">My tools and apps, in one place. Tap a card to open it.</p>
   </section>
-
-  <main id="main"></main>
-
+  <div class="grid" id="grid"></div>
   <footer>
     <img src="https://doomnest.doomsage.in/assets/3-logo.png" alt="" onerror="this.style.display='none'">
     <div class="big">DOOMSAGE</div>
     <p>&copy; 2026 Kunal Dewangan (Doomsage)</p>
   </footer>
 </div>
-
 <script>
 var P=[
-{n:"DoomNest",c:"Apps",u:"https://doomnest.doomsage.in/",d:"My app store. Every Android app I build is listed here, ready to install.",s:"live"},
-{n:"Doomloader",c:"Apps",u:"https://doomnest.doomsage.in/#/doomloader",d:"My own Android YouTube video downloader. Save video or audio to your phone.",s:"live"},
-{n:"Doomvisible",c:"Apps",u:"https://doomnest.doomsage.in/#/doomvisible",d:"An Android reader that keeps your WhatsApp group timelines in one place.",s:"live"},
-{n:"DoomChat",c:"Sites",u:"https://chat.doomsage.in/",d:"Private chats on your own server.",s:"wip"},
-{n:"DoomCloud",c:"Tools",u:"https://doomcloud.doomsage.in/",d:"My personal cloud for files, running on my own home server.",s:"live"},
-{n:"Link Shortener",c:"Tools",u:"https://link.doomsage.in/",d:"A custom URL shortener with a clean interface. Free for anyone to use.",s:"live"},
-{n:"Design Catalogue",c:"Sites",u:"https://doomsage-design-catalogue.vercel.app/",d:"Eight website design styles, each with a full playground of working components.",s:"live"},
-{n:"AURA",c:"Sites",u:"https://aura-music-self.vercel.app/",d:"A song preview player where the background colours move with the music.",s:"wip"},
-{n:"Avanti Cuttack Guide",c:"Sites",u:"https://avanti-cuttack.vercel.app/",d:"A modern guide website for Avanti Fellows Cuttack.",s:"live"}
+{n:"DoomCloud",t:"CLOUD",u:"https://doomcloud.doomsage.in/",d:"My personal cloud for files, running on my own home server."},
+{n:"Insta Fetch",t:"TOOL",u:"https://fetch.doomsage.in/",d:"Download Instagram profile pictures, posts, reels, highlights and stories."},
+{n:"DoomNest",t:"APPS",u:"https://doomnest.doomsage.in/",d:"My app store. Every Android app I build is listed here, ready to install."},
+{n:"DoomChat",t:"CHAT",u:"https://chat.doomsage.in/",d:"Private chats on your own server."}
 ];
-var CATS=["Apps","Sites","Tools"],LBL={Apps:"APPS",Sites:"SITES",Tools:"TOOLS"};
-var main=document.getElementById("main");
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-var html="";
-CATS.forEach(function(c){
-  var items=P.filter(function(p){return p.c===c});
-  if(!items.length)return;
-  html+='<section class="sec" data-c="'+c+'"><h2>'+LBL[c]+'</h2><div class="grid">';
-  items.forEach(function(p,i){
-    var host=p.u.replace(/^https?:\/\//,"").replace(/\/$/,"");
-    html+='<a class="card" href="'+esc(p.u)+'" target="_blank" rel="noopener" data-u="'+esc(p.u)+'" data-s="'+p.s+'">'+
-    (p.s==="wip"?'<span class="badge">IN PROGRESS</span>':'')+
-    '<div class="row"><span class="tag">'+LBL[c].slice(0,-1)+'</span><span class="state"><span class="dot"></span><span class="st">CHECKING</span></span></div>'+
-    '<h3>'+esc(p.n)+'</h3><p>'+esc(p.d)+'</p><div class="url"><span>'+esc(host)+'</span><i>&#8599;</i></div></a>';
-  });
-  html+='</div></section>';
+var h="";
+P.forEach(function(p){
+  var host=p.u.replace(/^https?:\/\//,"").replace(/\/$/,"");
+  h+='<a class="card" href="'+esc(p.u)+'" target="_blank" rel="noopener" data-u="'+esc(p.u)+'"><div class="row"><span class="tag">'+esc(p.t)+'</span><span class="state"><span class="dot"></span><span class="st">CHECKING</span></span></div><h3>'+esc(p.n)+'</h3><p>'+esc(p.d)+'</p><div class="url"><span>'+esc(host)+'</span><i>&#8599;</i></div></a>';
 });
-main.innerHTML=html;
-document.getElementById("n-all").textContent=P.length;
-document.getElementById("n-wip").textContent=P.filter(function(p){return p.s==="wip"}).length;
-var live=0;
-function setLive(){document.getElementById("n-live").textContent=live}
+document.getElementById("grid").innerHTML=h;
 document.querySelectorAll(".card").forEach(function(card){
   var st=card.querySelector(".state"),lbl=card.querySelector(".st");
-  var u=card.getAttribute("data-u").split("#")[0];
   var ctl=new AbortController(),t=setTimeout(function(){ctl.abort()},8000);
-  fetch(u,{mode:"no-cors",cache:"no-store",signal:ctl.signal}).then(function(){
-    clearTimeout(t);st.className="state up";lbl.textContent="ONLINE";live++;setLive();
-  }).catch(function(){
-    clearTimeout(t);st.className="state down";lbl.textContent="OFFLINE";
-  });
-});
-document.getElementById("chips").addEventListener("click",function(e){
-  var b=e.target.closest(".chip");if(!b)return;
-  document.querySelectorAll(".chip").forEach(function(x){x.classList.toggle("on",x===b)});
-  var f=b.getAttribute("data-f");
-  document.querySelectorAll(".sec").forEach(function(s){s.classList.toggle("hide",f!=="all"&&s.getAttribute("data-c")!==f)});
+  fetch(card.getAttribute("data-u"),{mode:"no-cors",cache:"no-store",signal:ctl.signal}).then(function(){clearTimeout(t);st.className="state up";lbl.textContent="ONLINE"}).catch(function(){clearTimeout(t);st.className="state down";lbl.textContent="OFFLINE"});
 });
 </script>
 </body>
